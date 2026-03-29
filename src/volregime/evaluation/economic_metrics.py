@@ -153,7 +153,7 @@ def compute_benchmark_metrics(
 
     # inverse vol (trailing RV vol-targeting, no model)
     window = 21
-    trail_rv = pd.Series(r).rolling(window).std().fillna(method='bfill').values
+    trail_rv = pd.Series(r).rolling(window).std().bfill().values
     trail_rv_ann = trail_rv * np.sqrt(ann_factor)
     iv_weights = np.clip(sigma_target / np.maximum(trail_rv_ann, 1e-4), 0.0, 1.5)
     iv_returns = np.roll(iv_weights, 1) * r
